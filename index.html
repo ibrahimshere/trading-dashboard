@@ -39,8 +39,19 @@
             background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
             border: 1px solid #0f3460;
         }
+        .stat-card.live-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #1a3a1a 0%, #0d2818 100%);
+            border: 1px solid #2d6a2d;
+        }
+        .stat-card.paper-card {
+            grid-column: span 2;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #333;
+        }
         .stat-value { font-size: 28px; font-weight: bold; color: #4ade80; }
         .stat-value.negative { color: #f87171; }
+        .stat-value.paper { color: #888; font-size: 20px; }
         .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
         .goal-bar {
             background: #333;
@@ -77,7 +88,9 @@
             border-left: 3px solid #333;
         }
         .bot-card.running { border-left-color: #4ade80; }
-        .bot-card.live { border-left-color: #f59e0b; background: rgba(245,158,11,0.1); }
+        .bot-card.live-running { border-left-color: #f59e0b; background: rgba(245,158,11,0.1); }
+        .bot-card.live-stopped { border-left-color: #f87171; background: rgba(245,158,11,0.05); opacity: 0.7; }
+        .bot-card.corrupted { border-left-color: #ef4444; background: rgba(239,68,68,0.1); opacity: 0.6; }
         .bot-card.stopped { border-left-color: #f87171; opacity: 0.7; }
         .bot-name { font-weight: 600; font-size: 14px; }
         .bot-meta { font-size: 12px; color: #888; margin-top: 2px; }
@@ -100,52 +113,61 @@
             border-radius: 4px;
             margin-left: 8px;
         }
+        .corrupted-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        .source-badge {
+            background: rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 Trading Dashboard</h1>
-            <div class="time">Last updated: 2026-03-22 09:05 AM</div>
+            <h1>Trading Dashboard</h1>
+            <div class="time">Last updated: 2026-03-22 09:26 AM</div>
         </div>
-        
+
         <div class="stats-grid">
-            <div class="stat-card highlight">
-                <div class="stat-value">$124,065.55</div>
-                <div class="stat-label">Total Balance</div>
+            <div class="stat-card live-card">
+                <div class="stat-value">$62.06</div>
+                <div class="stat-label">LIVE Balance (Running)</div>
                 <div class="goal-bar">
-                    <div class="goal-progress" style="width: 100.0%"></div>
+                    <div class="goal-progress" style="width: 0.1%"></div>
                 </div>
-                <div class="stat-label">124.07% to $100K goal • 223 days left</div>
+                <div class="stat-label">0.06% to $100K goal &bull; 223 days left</div>
+            </div>
+            <div class="stat-card paper-card">
+                <div class="stat-value paper">$114,035</div>
+                <div class="stat-label">Paper Balance (Simulated)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">17</div>
+                <div class="stat-value">20</div>
                 <div class="stat-label">Bots Running</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">10</div>
+                <div class="stat-value">11</div>
                 <div class="stat-label">In Position</div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">🔥 Live Bots</div>
+            <div class="section-title">LIVE RUNNING (1)</div>
 
-            <div class="bot-card live running">
-                <div>
-                    <div class="bot-name">S5 Live</div>
-                    <div class="bot-meta">22 trades • 86% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$63.86</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card live running">
+            <div class="bot-card live-running">
                 <div>
                     <div class="bot-name">S17 Live</div>
-                    <div class="bot-meta">11 trades • 55% WR</div>
+                    <div class="bot-meta">11 trades &bull; 55% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$62.06</div>
@@ -155,12 +177,126 @@
         </div>
 
         <div class="section">
-            <div class="section-title">🏆 Winners (77)</div>
+            <div class="section-title">CORRUPTED (10) &mdash; excluded from totals</div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">S5 Live<span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">22 trades &bull; 86% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Re Combo 1 03041200<span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">43 trades &bull; 44% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Re Rbi Adaptivere...<span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">72 trades &bull; 40% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Re Rbi Liquidatio...<span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">79 trades &bull; 48% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Re Rbi Volcompres...<span class="position-badge">IN POSITION</span><span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">2085 trades &bull; 43% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Adx Ma Trend<span class="corrupted-badge">CORRUPTED</span><span class="source-badge">state</span></div>
+                    <div class="bot-meta">3 trades &bull; 0% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Megacombo<span class="position-badge">IN POSITION</span><span class="corrupted-badge">CORRUPTED</span><span class="source-badge">state</span></div>
+                    <div class="bot-meta">9 trades &bull; 22% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Consecutive Down Adx<span class="position-badge">IN POSITION</span><span class="corrupted-badge">CORRUPTED</span><span class="source-badge">state</span></div>
+                    <div class="bot-meta">4 trades &bull; 0% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Re Idea 20260305 ...<span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">22 trades &bull; 55% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card corrupted">
+                <div>
+                    <div class="bot-name">Liquidationsqueeze<span class="corrupted-badge">CORRUPTED</span></div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$0.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Winners (77)</div>
 
             <div class="bot-card running">
                 <div>
                     <div class="bot-name">S17</div>
-                    <div class="bot-meta">35 trades • 86% WR</div>
+                    <div class="bot-meta">35 trades &bull; 86% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,269.65</div>
@@ -171,7 +307,7 @@
             <div class="bot-card running">
                 <div>
                     <div class="bot-name">S5<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">119 trades • 81% WR</div>
+                    <div class="bot-meta">119 trades &bull; 81% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,234.54</div>
@@ -182,7 +318,7 @@
             <div class="bot-card stopped">
                 <div>
                     <div class="bot-name">Idea7<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">128 trades • 41% WR</div>
+                    <div class="bot-meta">128 trades &bull; 41% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,165.40</div>
@@ -193,7 +329,7 @@
             <div class="bot-card stopped">
                 <div>
                     <div class="bot-name">Idea3<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">98 trades • 40% WR</div>
+                    <div class="bot-meta">98 trades &bull; 40% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,063.28</div>
@@ -203,8 +339,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03170000 Py</div>
-                    <div class="bot-meta">7 trades • 71% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">7 trades &bull; 71% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,046.80</div>
@@ -214,8 +350,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03040001 Py</div>
-                    <div class="bot-meta">10 trades • 70% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">10 trades &bull; 70% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,043.93</div>
@@ -225,8 +361,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03181200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,037.88</div>
@@ -236,8 +372,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03180602 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,037.88</div>
@@ -247,8 +383,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03190000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,037.85</div>
@@ -258,8 +394,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03040600 Py</div>
-                    <div class="bot-meta">11 trades • 64% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">11 trades &bull; 64% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,037.42</div>
@@ -269,8 +405,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03190000 Py</div>
-                    <div class="bot-meta">7 trades • 71% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">7 trades &bull; 71% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,034.93</div>
@@ -280,8 +416,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03160000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,034.76</div>
@@ -291,8 +427,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03160601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,034.39</div>
@@ -302,8 +438,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03041200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,034.16</div>
@@ -313,8 +449,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03141200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.98</div>
@@ -324,8 +460,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03141200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.98</div>
@@ -335,8 +471,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03141800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.85</div>
@@ -346,8 +482,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03150000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.72</div>
@@ -357,8 +493,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03110601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.66</div>
@@ -368,8 +504,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03111200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.66</div>
@@ -379,8 +515,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03110601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.66</div>
@@ -390,8 +526,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03120000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.66</div>
@@ -401,8 +537,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03130000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.66</div>
@@ -412,8 +548,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03130000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.66</div>
@@ -423,8 +559,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03060000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.44</div>
@@ -434,8 +570,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03091800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,033.09</div>
@@ -445,8 +581,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03091200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.98</div>
@@ -456,8 +592,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03090000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.98</div>
@@ -467,8 +603,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03081200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.64</div>
@@ -478,8 +614,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03071200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.64</div>
@@ -489,8 +625,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03081800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.64</div>
@@ -500,8 +636,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03080000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.64</div>
@@ -511,8 +647,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03140601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.57</div>
@@ -522,8 +658,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03121220 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.51</div>
@@ -533,8 +669,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03121231 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.51</div>
@@ -544,8 +680,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03121800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.51</div>
@@ -555,8 +691,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03071800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.50</div>
@@ -566,8 +702,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03080000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.50</div>
@@ -577,8 +713,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03110601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.36</div>
@@ -588,8 +724,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03070601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.24</div>
@@ -599,8 +735,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03100600 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.15</div>
@@ -610,8 +746,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03100600 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.15</div>
@@ -621,8 +757,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03110000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.15</div>
@@ -632,8 +768,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03100000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.15</div>
@@ -643,8 +779,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03060600 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.08</div>
@@ -654,8 +790,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03060000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.08</div>
@@ -665,8 +801,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03171800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,032.07</div>
@@ -676,8 +812,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03060600 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,031.81</div>
@@ -687,8 +823,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03061200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,031.81</div>
@@ -698,8 +834,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03061200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,031.81</div>
@@ -709,8 +845,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03131200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,028.95</div>
@@ -720,8 +856,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03060000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,028.75</div>
@@ -731,8 +867,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03091800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,028.45</div>
@@ -742,8 +878,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03070601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.96</div>
@@ -753,8 +889,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260304 115346</div>
-                    <div class="bot-meta">9 trades • 67% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">9 trades &bull; 67% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.89</div>
@@ -764,8 +900,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03060600 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.37</div>
@@ -775,8 +911,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03180000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.19</div>
@@ -786,8 +922,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03181200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.19</div>
@@ -797,8 +933,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03171800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.01</div>
@@ -808,8 +944,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03171800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,027.01</div>
@@ -819,8 +955,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03171200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,025.84</div>
@@ -830,8 +966,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260305 003851</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,025.14</div>
@@ -841,8 +977,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260304 114956</div>
-                    <div class="bot-meta">10 trades • 60% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">10 trades &bull; 60% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,024.88</div>
@@ -852,8 +988,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03131200 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,024.20</div>
@@ -863,8 +999,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260305 222254</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,024.04</div>
@@ -874,8 +1010,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260304 200208</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,024.04</div>
@@ -885,8 +1021,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260304 164547</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,024.04</div>
@@ -896,8 +1032,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03091800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.79</div>
@@ -907,8 +1043,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03090601 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.72</div>
@@ -918,8 +1054,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03140000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.61</div>
@@ -929,8 +1065,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03081800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.47</div>
@@ -940,8 +1076,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03111800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.39</div>
@@ -951,8 +1087,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03120000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.39</div>
@@ -962,8 +1098,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03071800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.38</div>
@@ -973,8 +1109,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03061800 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 1 030...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.19</div>
@@ -984,8 +1120,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03110000 Py</div>
-                    <div class="bot-meta">8 trades • 62% WR</div>
+                    <div class="bot-name">Alpha Combo 0 031...</div>
+                    <div class="bot-meta">8 trades &bull; 62% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,023.13</div>
@@ -995,8 +1131,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Idea 20260304 131845</div>
-                    <div class="bot-meta">9 trades • 56% WR</div>
+                    <div class="bot-name">Alpha Idea 202603...</div>
+                    <div class="bot-meta">9 trades &bull; 56% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,018.21</div>
@@ -1006,23 +1142,12 @@
         </div>
 
         <div class="section">
-            <div class="section-title">⚖️ Breakeven (17)</div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Hlp Mm</div>
-                    <div class="bot-meta">11 trades • 64% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.31</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
+            <div class="section-title">Breakeven (13)</div>
 
             <div class="bot-card running">
                 <div>
                     <div class="bot-name">Scalp</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1032,8 +1157,8 @@
 
             <div class="bot-card running">
                 <div>
-                    <div class="bot-name">Re Combo 1 03041200</div>
-                    <div class="bot-meta">43 trades • 44% WR</div>
+                    <div class="bot-name">Re Rbi Trend Brea...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1043,30 +1168,8 @@
 
             <div class="bot-card running">
                 <div>
-                    <div class="bot-name">Re Rbi Trend Breakoutre 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Re Idea 20260305 222254 Cross Asse Backtest</div>
-                    <div class="bot-meta">22 trades • 55% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card running">
-                <div>
-                    <div class="bot-name">Re Rbi Adaptivereversal 0304</div>
-                    <div class="bot-meta">72 trades • 40% WR</div>
+                    <div class="bot-name">Consecutive Down Btc</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1077,7 +1180,7 @@
             <div class="bot-card running">
                 <div>
                     <div class="bot-name">Macro Fomc</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1087,8 +1190,8 @@
 
             <div class="bot-card running">
                 <div>
-                    <div class="bot-name">Re Rbi Liquidationfract 0304</div>
-                    <div class="bot-meta">79 trades • 48% WR</div>
+                    <div class="bot-name">Re Rbi Liquidityr...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1098,8 +1201,8 @@
 
             <div class="bot-card running">
                 <div>
-                    <div class="bot-name">Re Rbi Volcompressliqui 0304<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">2083 trades • 43% WR</div>
+                    <div class="bot-name">Multi Exchange<span class="position-badge">IN POSITION</span><span class="source-badge">moondev_bots</span></div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1109,8 +1212,19 @@
 
             <div class="bot-card running">
                 <div>
-                    <div class="bot-name">Re Rbi Liquidityreversa 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Pre Liq<span class="source-badge">moondev_bots</span></div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance positive">$1,000.00</div>
+                    <div class="bot-wr">+0.0%</div>
+                </div>
+            </div>
+
+            <div class="bot-card running">
+                <div>
+                    <div class="bot-name">Enhanced Cascade<span class="source-badge">moondev_bots</span></div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1120,41 +1234,19 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Liquidationsqueeze</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Hlp Mm</div>
+                    <div class="bot-meta">11 trades &bull; 64% WR</div>
                 </div>
                 <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
+                    <div class="bot-balance positive">$1,000.31</div>
                     <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card running">
-                <div>
-                    <div class="bot-name">Adx Ma Trend</div>
-                    <div class="bot-meta">3 trades • 0% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance negative">$995.85</div>
-                    <div class="bot-wr">-0.4%</div>
-                </div>
-            </div>
-
-            <div class="bot-card running">
-                <div>
-                    <div class="bot-name">Megacombo<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">9 trades • 22% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance negative">$993.85</div>
-                    <div class="bot-wr">-0.6%</div>
                 </div>
             </div>
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03210001 Py</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Alpha Combo 2 032...</div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$992.51</div>
@@ -1164,8 +1256,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03201200 Py</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Alpha Combo 0 032...</div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$992.51</div>
@@ -1175,8 +1267,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03210001 Py</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Alpha Combo 0 032...</div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$992.51</div>
@@ -1186,8 +1278,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03211814 Py</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Alpha Combo 2 032...</div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$992.51</div>
@@ -1197,12 +1289,34 @@
         </div>
 
         <div class="section">
-            <div class="section-title">📉 Losers (9)</div>
+            <div class="section-title">Losers (9)</div>
+
+            <div class="bot-card running">
+                <div>
+                    <div class="bot-name">S5 250K<span class="position-badge">IN POSITION</span></div>
+                    <div class="bot-meta">187 trades &bull; 78% WR</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance negative">$932.25</div>
+                    <div class="bot-wr">-6.8%</div>
+                </div>
+            </div>
+
+            <div class="bot-card running">
+                <div>
+                    <div class="bot-name">Supertrend-Vol<span class="position-badge">IN POSITION</span></div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
+                </div>
+                <div class="bot-stats">
+                    <div class="bot-balance negative">$907.19</div>
+                    <div class="bot-wr">-9.3%</div>
+                </div>
+            </div>
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 1 03201200 Py</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Alpha Combo 1 032...</div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$989.51</div>
@@ -1212,8 +1326,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 0 03211814 Py</div>
-                    <div class="bot-meta">1 trades • 0% WR</div>
+                    <div class="bot-name">Alpha Combo 0 032...</div>
+                    <div class="bot-meta">1 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$989.51</div>
@@ -1224,7 +1338,7 @@
             <div class="bot-card stopped">
                 <div>
                     <div class="bot-name">Idea6<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">11 trades • 36% WR</div>
+                    <div class="bot-meta">11 trades &bull; 36% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$981.48</div>
@@ -1234,8 +1348,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Alpha Combo 2 03191800 Py</div>
-                    <div class="bot-meta">4 trades • 25% WR</div>
+                    <div class="bot-name">Alpha Combo 2 031...</div>
+                    <div class="bot-meta">4 trades &bull; 25% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$971.77</div>
@@ -1243,32 +1357,10 @@
                 </div>
             </div>
 
-            <div class="bot-card running">
-                <div>
-                    <div class="bot-name">S5 250K<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">187 trades • 78% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance negative">$932.25</div>
-                    <div class="bot-wr">-6.8%</div>
-                </div>
-            </div>
-
-            <div class="bot-card running">
-                <div>
-                    <div class="bot-name">Consecutive Down Adx<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">4 trades • 0% WR</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance negative">$915.35</div>
-                    <div class="bot-wr">-8.5%</div>
-                </div>
-            </div>
-
             <div class="bot-card stopped">
                 <div>
                     <div class="bot-name">Phased</div>
-                    <div class="bot-meta">45 trades • 0% WR</div>
+                    <div class="bot-meta">45 trades &bull; 0% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$844.04</div>
@@ -1279,7 +1371,7 @@
             <div class="bot-card stopped">
                 <div>
                     <div class="bot-name">S16<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">85 trades • 71% WR</div>
+                    <div class="bot-meta">85 trades &bull; 71% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$750.58</div>
@@ -1287,10 +1379,10 @@
                 </div>
             </div>
 
-            <div class="bot-card running">
+            <div class="bot-card stopped">
                 <div>
                     <div class="bot-name">S5 06</div>
-                    <div class="bot-meta">30 trades • 63% WR</div>
+                    <div class="bot-meta">30 trades &bull; 63% WR</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance negative">$725.30</div>
@@ -1300,12 +1392,12 @@
         </div>
 
         <div class="section">
-            <div class="section-title">💤 Inactive (19) — 0 trades, not running</div>
+            <div class="section-title">Inactive (13) &mdash; 0 trades, not running</div>
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Liquidation Retrace</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1315,8 +1407,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 130523 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1326,8 +1418,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Liquidationretrace Pkg V4</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260305 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1337,8 +1429,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 131845 Cross Asse Backtest</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1348,8 +1440,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260305 003851 Tick Micro Backtest</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1359,8 +1451,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 125425 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1370,8 +1462,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 124430 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1381,8 +1473,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Idea18</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1392,8 +1484,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 200208 Smart Mone Backtest</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Volume Wick Exhau...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1403,8 +1495,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 123422 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1414,8 +1506,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Re Idea 20260304 122428 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1425,8 +1517,8 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Liquidationretrace</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Re Idea 20260304 ...</div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
@@ -1436,85 +1528,20 @@
 
             <div class="bot-card stopped">
                 <div>
-                    <div class="bot-name">Volume Wick Exhaustion</div>
-                    <div class="bot-meta">0 trades • No trades</div>
+                    <div class="bot-name">Liquidation Retrace<span class="source-badge">state</span></div>
+                    <div class="bot-meta">0 trades &bull; No trades</div>
                 </div>
                 <div class="bot-stats">
                     <div class="bot-balance positive">$1,000.00</div>
                     <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Re Idea 20260304 121435 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Re Idea 20260304 131523 0304</div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Re Idea 20260304 164547 Hlp Fade Backtest</div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Liqretrace Moon</div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Liquidation Retrace</div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance positive">$1,000.00</div>
-                    <div class="bot-wr">+0.0%</div>
-                </div>
-            </div>
-
-            <div class="bot-card stopped">
-                <div>
-                    <div class="bot-name">Supertrend-Vol<span class="position-badge">IN POSITION</span></div>
-                    <div class="bot-meta">0 trades • No trades</div>
-                </div>
-                <div class="bot-stats">
-                    <div class="bot-balance negative">$907.19</div>
-                    <div class="bot-wr">-9.3%</div>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            Updated every hour • Goal: $100K by Nov 2026<br>
-            124 total bots • 17 running
+            Updated every hour &bull; Goal: $100K by Nov 2026<br>
+            123 total bots &bull; 20 running
+             &bull; 10 corrupted
         </div>
     </div>
 </body>
